@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.ssg'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.10.2'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compileOnly('javax.servlet:javax.servlet-api:4.0.1') //서블릿 api 제공
+
+    //    스프링 모듈 및 MySQL 드라이버
+    implementation 'org.springframework:spring-core:5.3.27'//스프링 코어
+    implementation 'org.springframework:spring-context:5.3.27'//위쪽 api와 쌍으로 이루어짐 ( 스프링 코어)
+    implementation 'org.springframework:spring-webmvc:5.3.27'//
+    implementation 'org.springframework:spring-test:5.3.27'//테스트 하기위한 api
+    implementation 'mysql:mysql-connector-java:8.0.22'// 데이타 베이스 연결을 위한
+
+    // Lombok 라이브러리
+    compileOnly 'org.projectlombok:lombok:1.18.30' //롬복을 사용 한다.
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+    //로그 출력
+    implementation 'org.apache.logging.log4j:log4j-api:2.22.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.22.1'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.22.1'
+    testImplementation 'org.apache.logging.log4j:log4j-core:2.22.1'
+
+    // JSP VIEW로 JSP를 쓰기 위해서
+    implementation 'jstl:jstl:1.2'
+    // DB 연동
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+
+    //DTO 데이터변환 자동화
+    implementation 'org.modelmapper:modelmapper:3.0.0'
+
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")//기본제공 api
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
